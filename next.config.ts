@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'export',
+  basePath: '/NetWork',
+  trailingSlash: true,
+  images: { unoptimized: true },
   typescript: { ignoreBuildErrors: true },
 };
 
