@@ -241,3 +241,33 @@ body {
 .header-shadow {
   box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
 }
+
+/* ===================== 波浪背景动画 ===================== */
+.bg-wave-box {
+  position: absolute;
+  inset: auto 0 0 0;
+  background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(139,92,246,0.10));
+  -webkit-mask:
+    radial-gradient(46.6px at 50% calc(100% - 65px), #fff 99%, transparent 101%),
+    radial-gradient(46.6px at 50% calc(100% + 38px), transparent 99%, #fff 101%) repeat-x;
+  -webkit-mask-size: calc(4 * 27px) 100%;
+  -webkit-mask-position: calc(50% - 2*27px) 0, 50% calc(100% - 27px);
+  mask:
+    radial-gradient(46.6px at 50% calc(100% - 65px), #fff 99%, transparent 101%),
+    radial-gradient(46.6px at 50% calc(100% + 38px), transparent 99%, #fff 101%) repeat-x;
+  mask-size: calc(4 * 27px) 100%;
+  mask-position: calc(50% - 2*27px) 0, 50% calc(100% - 27px);
+  animation: waveFlow 5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes waveFlow {
+  100% {
+    -webkit-mask-position: calc(50% - 6*27px) 0, calc(50% - 4*27px) calc(200% - 27px);
+    mask-position: calc(50% - 6*27px) 0, calc(50% - 4*27px) calc(200% - 27px);
+  }
+}
+
+.bg-wave-box:nth-child(1) { height: 35%; opacity: 0.5; }
+.bg-wave-box:nth-child(2) { height: 67%; opacity: 0.35; }
+.bg-wave-box:nth-child(3) { height: 93%; opacity: 0.2; }

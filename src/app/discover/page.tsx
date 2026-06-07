@@ -1,6 +1,7 @@
 'use client'
 import { useMemo } from 'react'
 import Header from '@/components/Header'
+import BackgroundWaves from '@/components/BackgroundWaves'
 import Sidebar from '@/components/Sidebar'
 import RightPanel from '@/components/RightPanel'
 import SortBar from '@/components/SortBar'
@@ -21,8 +22,10 @@ export default function DiscoverPage() {
   )
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7]">
-      <Header />
+    <div className="min-h-screen bg-[#f5f5f7] relative">
+      <BackgroundWaves />
+      <div className="relative z-10">
+        <Header />
       <main className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex gap-6">
           <div className="hidden lg:block w-56 shrink-0">
@@ -91,6 +94,7 @@ export default function DiscoverPage() {
           </div>
         </div>
       </footer>
+      </div>{/* end relative z-10 */}
     </div>
   )
 }
