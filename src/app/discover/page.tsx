@@ -37,10 +37,10 @@ export default function DiscoverPage() {
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-lg font-bold text-gray-800">
                   {currentCategory
-                    ? ({ tech: '🤖 科技与未来', life: '🏠 生活与消费', work: '💼 工作与效率', society: '🌍 社会与人文', entertain: '🎨 娱乐与艺术', fantasy: '✨ 奇妙异想', bounty: '🏆 悬赏专区' } as any)[currentCategory] || '🌟 全部脑洞'
-                    : currentTag ? `#${currentTag}` : '🌟 发现脑洞'}
+                    ? ({ tech: '🤖 科技与未来', life: '🏠 生活与消费', work: '💼 工作与效率', society: '🌍 社会与人文', entertain: '🎨 娱乐与艺术', fantasy: '✨ 奇妙异想', bounty: '🏆 悬赏专区' } as any)[currentCategory] || '🌟 全部洞核'
+                    : currentTag ? `#${currentTag}` : '🌟 发现洞核'}
                 </h2>
-                <span className="text-xs text-gray-400">{filteredIdeas.length} 个脑洞</span>
+                <span className="text-xs text-gray-400">{filteredIdeas.length} 个洞核</span>
               </div>
               <SortBar />
             </div>
@@ -57,7 +57,7 @@ export default function DiscoverPage() {
             {filteredIdeas.length === 0 ? (
               <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 animate-in">
                 <div className="text-5xl mb-4">🔍</div>
-                <p className="text-gray-500 font-medium">没有找到匹配的脑洞</p>
+                <p className="text-gray-500 font-medium">没有找到匹配的洞核</p>
                 <p className="text-sm text-gray-400 mt-2">换个筛选条件试试？</p>
               </div>
             ) : (
@@ -68,7 +68,7 @@ export default function DiscoverPage() {
 
             {filteredIdeas.length > 0 && (
               <div className="text-center mt-6 mb-4 animate-in-d3">
-                <button className="px-8 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-500 hover:border-purple-300 hover:text-purple-600 transition-all font-medium">加载更多脑洞 →</button>
+                <button className="px-8 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-500 hover:border-purple-300 hover:text-purple-600 transition-all font-medium">加载更多洞核 →</button>
               </div>
             )}
           </div>
@@ -90,7 +90,7 @@ export default function DiscoverPage() {
             <span>·</span>
             <a href="/discover" className="hover:text-purple-500 no-underline">帮助中心</a>
             <span>·</span>
-            <span>© 2026 脑洞星球</span>
+            <span>© 2026 嘿洞星球</span>
           </div>
         </div>
       </footer>

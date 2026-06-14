@@ -20,6 +20,15 @@
 # production
 /build
 
+# static export (output: 'export')
+/_not-found/
+/discover/
+/idea/
+/profile/
+/publish/
+/search/
+/user/
+
 # misc
 .DS_Store
 *.pem

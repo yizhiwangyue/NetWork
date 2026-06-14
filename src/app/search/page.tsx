@@ -21,11 +21,11 @@ export default function SearchPage() {
       <main className="max-w-5xl mx-auto px-4 py-6">
         {/* 搜索框 */}
         <div className="card p-5 mb-6 animate-in">
-          <h1 className="text-lg font-bold text-gray-800 mb-4">🔍 搜索脑洞</h1>
+          <h1 className="text-lg font-bold text-gray-800 mb-4">🔍 搜索洞核</h1>
           <div className="flex gap-3">
             <div className="flex-1 relative">
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" placeholder="搜索脑洞的标题或内容..." value={query} onChange={e => setQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') setSearch(query) }} className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/30 focus:border-indigo-400 focus:bg-white transition-all" />
+              <input type="text" placeholder="搜索洞核的标题或内容..." value={query} onChange={e => setQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') setSearch(query) }} className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/30 focus:border-indigo-400 focus:bg-white transition-all" />
             </div>
             <button onClick={() => setSearch(query)} className="btn-primary px-6 py-3 text-sm">搜索</button>
           </div>
@@ -42,7 +42,7 @@ export default function SearchPage() {
         {filtered.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 animate-in">
             <div className="text-5xl mb-4">🔍</div>
-            <p className="text-gray-500 font-medium mb-1">没有找到相关脑洞</p>
+            <p className="text-gray-500 font-medium mb-1">没有找到相关洞核</p>
             <p className="text-sm text-gray-400">试试其他关键词或调整筛选条件</p>
           </div>
         ) : (

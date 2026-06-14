@@ -14,6 +14,8 @@ interface AppState {
   currentUser: { id: string; nickname: string; avatar: string } | null
   collectionFolders: CollectionFolder[]
   ideaFolders: CollectionFolder[]
+  followFolders: CollectionFolder[]
+  followedUserIds: string[]
 
   setSortMode: (mode: SortMode) => void
   setCategory: (cat: string | null) => void
@@ -43,16 +45,26 @@ interface AppState {
   removeIdeaFromIdeaFolder: (folderId: string, ideaId: string) => void
   getIdeaFolderIdeas: (folderId: string) => Idea[]
   updateCurrentUser: (user: { nickname: string; avatar: string; bio: string }) => void
+  toggleFollow: (userId: string) => void
+  // 关注分组
+  addFollowFolder: (name: string) => void
+  renameFollowFolder: (folderId: string, name: string) => void
+  deleteFollowFolder: (folderId: string) => void
+  addUserToFollowFolder: (folderId: string, userId: string) => void
+  removeUserFromFollowFolder: (folderId: string, userId: string) => void
+  getFollowFolderUsers: (folderId: string) => string[]
 }
 
 const DEFAULT_FOLDERS: CollectionFolder[] = [
   { id: 'fav_default', name: '默认收藏', ideaIds: [], icon: '⭐', createdAt: '2026-01-01T00:00:00Z', isDefault: true },
-  { id: 'fav_watch', name: '待实现', ideaIds: [], icon: '👀', createdAt: '2026-01-01T00:00:00Z' },
 ]
 
 const DEFAULT_IDEA_FOLDERS: CollectionFolder[] = [
   { id: 'idea_default', name: '默认创作', ideaIds: [], icon: '📝', createdAt: '2026-01-01T00:00:00Z', isDefault: true },
-  { id: 'idea_private', name: '私密', ideaIds: [], icon: '🔒', createdAt: '2026-01-01T00:00:00Z' },
+]
+
+const DEFAULT_FOLLOW_FOLDERS: CollectionFolder[] = [
+  { id: 'follow_default', name: '默认', ideaIds: [], icon: '👥', createdAt: '2026-01-01T00:00:00Z', isDefault: true },
 ]
 
 // 给种子数据加 isPublic
@@ -70,6 +82,8 @@ export const useStore = create<AppState>()(
   currentUser: { id: 'u_me', nickname: '我', avatar: '😎' },
   collectionFolders: DEFAULT_FOLDERS,
   ideaFolders: DEFAULT_IDEA_FOLDERS,
+  followFolders: DEFAULT_FOLLOW_FOLDERS,
+  followedUserIds: [],
 
   setSortMode: (mode) => set({ sortMode: mode }),
   setCategory: (cat) => set({ currentCategory: cat }),
@@ -116,9 +130,27 @@ export const useStore = create<AppState>()(
   removeIdeaFromIdeaFolder: (folderId, ideaId) => set((state) => ({ ideaFolders: state.ideaFolders.map(f => f.id === folderId ? { ...f, ideaIds: f.ideaIds.filter(id => id !== ideaId) } : f) })),
   getIdeaFolderIdeas: (folderId) => { const s = get(); const f = s.ideaFolders.find(f => f.id === folderId); return f ? s.ideas.filter(i => f.ideaIds.includes(i.id)) : [] },
   updateCurrentUser: (user) => set((state) => ({ currentUser: state.currentUser ? { ...state.currentUser, ...user } : state.currentUser })),
+  toggleFollow: (userId) => set((state) => {
+    const isFollowing = state.followedUserIds.includes(userId)
+    return {
+      followedUserIds: isFollowing ? state.followedUserIds.filter(id => id !== userId) : [...state.followedUserIds, userId],
+      followFolders: state.followFolders.map(f => f.id === 'follow_default' ? { ...f, ideaIds: isFollowing ? f.ideaIds.filter(id => id !== userId) : [...f.ideaIds, userId] } : f),
+    }
+  }),
+  // 关注分组
+  addFollowFolder: (name) => set((state) => ({ followFolders: [...state.followFolders, { id: `follow_${Date.now()}`, name, ideaIds: [], icon: '👥', createdAt: new Date().toISOString() }] })),
+  renameFollowFolder: (folderId, name) => set((state) => ({ followFolders: state.followFolders.map(f => f.id === folderId ? { ...f, name } : f) })),
+  deleteFollowFolder: (folderId) => set((state) => {
+    const folder = state.followFolders.find(f => f.id === folderId)
+    if (!folder) return state
+    return { followFolders: state.followFolders.filter(f => f.id !== folderId).map(f => f.id === 'follow_default' ? { ...f, ideaIds: [...f.ideaIds, ...folder.ideaIds.filter(id => !f.ideaIds.includes(id))] } : f) }
+  }),
+  addUserToFollowFolder: (folderId, userId) => set((state) => ({ followFolders: state.followFolders.map(f => f.id === folderId && !f.ideaIds.includes(userId) ? { ...f, ideaIds: [...f.ideaIds, userId] } : f) })),
+  removeUserFromFollowFolder: (folderId, userId) => set((state) => ({ followFolders: state.followFolders.map(f => f.id === folderId ? { ...f, ideaIds: f.ideaIds.filter(id => id !== userId) } : f) })),
+  getFollowFolderUsers: (folderId) => { const s = get(); const f = s.followFolders.find(f => f.id === folderId); return f ? f.ideaIds : [] },
     }),
     { name: 'brainhole-storage',
-      version: 1,
+      version: 2,
       migrate: (persisted: any) => {
         if (persisted?.state?.ideas) {
           // 建立种子数据 ID 索引
@@ -138,6 +170,9 @@ export const useStore = create<AppState>()(
             }
           }
         }
+        // 重置分组：只保留默认的
+        persisted.state.collectionFolders = DEFAULT_FOLDERS
+        persisted.state.ideaFolders = DEFAULT_IDEA_FOLDERS
         return persisted
       },
     }

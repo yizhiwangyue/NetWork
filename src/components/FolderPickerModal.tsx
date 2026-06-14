@@ -110,7 +110,7 @@ export default function FolderPickerModal({ ideaId, isOpen, onClose }: Props) {
               <span className="text-base">{folder.icon || '📁'}</span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-700">{folder.name}</p>
-                <p className="text-[11px] text-gray-400">{folder.ideaIds.length} 个脑洞</p>
+                <p className="text-[11px] text-gray-400">{folder.ideaIds.length} 个洞核</p>
               </div>
               {folder.isDefault && (
                 <span className="text-[10px] px-2 py-0.5 bg-indigo-50 text-indigo-500 rounded-full">默认</span>

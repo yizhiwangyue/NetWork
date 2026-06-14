@@ -25,8 +25,8 @@ export default function RightPanel() {
               <span className="text-lg">🤖</span>
             </div>
             <div>
-              <h3 className="text-sm font-bold text-gray-800">脑洞日报</h3>
-              <p className="text-[11px] text-gray-400">今日精选脑洞</p>
+              <h3 className="text-sm font-bold text-gray-800">嘿洞日报</h3>
+              <p className="text-[11px] text-gray-400">今日精选洞核</p>
             </div>
           </div>
 
@@ -98,7 +98,7 @@ export default function RightPanel() {
           <span className="text-xs font-medium text-gray-500">公告</span>
         </div>
         <p className="text-xs text-gray-400 leading-relaxed">
-          脑洞星球 v2.0 即将上线！新增图片上传、二级评论等功能，敬请期待。
+          嘿洞星球 v2.0 即将上线！新增图片上传、二级评论等功能，敬请期待。
         </p>
       </div>
     </aside>

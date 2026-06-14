@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useStore } from '@/lib/store'
 
 const FLOATING_EMOJIS = [
   { emoji: '💡', class: 'float1', size: 'text-5xl', x: '15%', y: '20%', delay: '0s' },
@@ -17,6 +18,7 @@ const FLOATING_EMOJIS = [
 
 export default function CoverPage() {
   const router = useRouter()
+  const ideas = useStore((s) => s.ideas)
   const [clicked, setClicked] = useState(false)
   const [showContent, setShowContent] = useState(false)
 
@@ -91,7 +93,7 @@ export default function CoverPage() {
           <h1 className="cover-title text-center">
             <span className="text-6xl md:text-7xl font-extrabold block leading-tight">
               <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-indigo-300 bg-clip-text text-transparent">
-                脑洞星球
+                嘿洞星球
               </span>
             </span>
             <span className="text-base md:text-lg font-light text-purple-300/60 mt-4 block tracking-[0.2em] uppercase">
@@ -103,7 +105,7 @@ export default function CoverPage() {
         {/* 副标题 */}
         {showContent && (
           <p className="cover-sub text-sm md:text-base text-purple-200/50 mt-6 text-center max-w-md leading-relaxed tracking-wider">
-            让每一个奇思妙想，都有回响
+            等你来开洞
           </p>
         )}
 
@@ -135,7 +137,7 @@ export default function CoverPage() {
         {/* 星星计数 */}
         {showContent && (
           <p className="cover-sub text-xs text-purple-300/30 mt-8 tracking-wider">
-            ✦ 已有 10 个脑洞等待探索 ✦
+            ✦ 已有 {ideas.length} 个洞核等待探索 ✦
           </p>
         )}
       </div>

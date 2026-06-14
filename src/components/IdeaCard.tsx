@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { Idea } from '@/lib/types'
 import { timeAgo, getCategoryLabel } from '@/lib/seed'
+import UserLink from './UserLink'
 
 const CARD_BANNERS = [
   'from-violet-100 via-purple-100 to-fuchsia-200',
@@ -59,12 +60,17 @@ export default function IdeaCard({ idea, index = 0 }: { idea: Idea; index?: numb
 
         <div className="flex items-center justify-between pt-2.5 border-t border-gray-100/80 mt-auto">
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-xs">{idea.isAnonymous ? '👤' : idea.author?.avatar}</span>
-            <span className="text-xs text-gray-400">{idea.isAnonymous ? '匿名用户' : idea.author?.nickname}</span>
+            <UserLink user={idea.author} isAnonymous={idea.isAnonymous}>
+              <span className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-xs cursor-pointer">{idea.isAnonymous ? '👤' : idea.author?.avatar}</span>
+            </UserLink>
+            <UserLink user={idea.author} isAnonymous={idea.isAnonymous}>
+              <span className="text-xs text-gray-400 cursor-pointer">{idea.isAnonymous ? '匿名用户' : idea.author?.nickname}</span>
+            </UserLink>
             <span className="text-[10px] text-gray-300">·</span>
             <span className="text-[10px] text-gray-300">{timeAgo(idea.createdAt)}</span>
           </div>
           <div className="flex items-center text-xs text-gray-400">
+            {idea.isPublic === false && <span className="mr-1.5 text-amber-500/70" title="私密">🔒</span>}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="mr-1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             {views.toLocaleString()} 浏览
           </div>

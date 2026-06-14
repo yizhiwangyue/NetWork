@@ -25,7 +25,7 @@ export default function Sidebar() {
           </Link>
           <Link href="/publish" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all no-underline">
             <span className="w-6 h-6 rounded-md bg-green-100 flex items-center justify-center text-xs">✏️</span>
-            发布脑洞
+            发布洞核
           </Link>
           <Link href="/profile" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all no-underline">
             <span className="w-6 h-6 rounded-md bg-purple-100 flex items-center justify-center text-xs">👤</span>

@@ -45,11 +45,11 @@ export default function PublishPage() {
       <Header />
       <main className="max-w-2xl mx-auto px-4 py-6">
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <h1 className="text-xl font-bold text-slate-800 mb-1">💡 发布你的脑洞</h1>
+          <h1 className="text-xl font-bold text-slate-800 mb-1">💡 发布你的洞核</h1>
           <p className="text-sm text-slate-400 mb-6">30 秒就能发布一个奇思妙想</p>
           <div className="space-y-5">
             <div><label className="block text-sm font-medium text-slate-700 mb-1.5">标题 <span className="text-red-400">*</span></label><input type="text" placeholder="用一句话抓住所有人的注意力..." value={title} onChange={e => setTitle(e.target.value.slice(0, 60))} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent" /><div className="text-xs text-slate-400 mt-1 text-right">{title.length}/60</div></div>
-            <div><label className="block text-sm font-medium text-slate-700 mb-1.5">详细描述 <span className="text-red-400">*</span></label><textarea placeholder="展开说说你的脑洞吧..." value={content} onChange={e => setContent(e.target.value)} rows={5} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent resize-none" /></div>
+            <div><label className="block text-sm font-medium text-slate-700 mb-1.5">详细描述 <span className="text-red-400">*</span></label><textarea placeholder="展开说说你的洞核吧..." value={content} onChange={e => setContent(e.target.value)} rows={5} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent resize-none" /></div>
             <div><label className="block text-sm font-medium text-slate-700 mb-1.5">一句话亮点 <span className="text-slate-400 font-normal">（可选）</span></label><input type="text" placeholder="例：再也不用偷偷在桌子底下找翻页笔了" value={highlight} onChange={e => setHighlight(e.target.value.slice(0, 50))} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent" /></div>
             <div><label className="block text-sm font-medium text-slate-700 mb-1.5">主题分类 <span className="text-red-400">*</span></label><select value={category} onChange={e => setCategory(e.target.value)} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent bg-white"><option value="">选择分类...</option>{CATEGORIES.map(cat => <option key={cat.key} value={cat.key}>{cat.icon} {cat.label}</option>)}</select></div>
             <div><label className="block text-sm font-medium text-slate-700 mb-1.5">添加标签 <span className="text-slate-400 font-normal">（最多 6 个）</span></label>
@@ -95,7 +95,7 @@ export default function PublishPage() {
 
             {/* 公开/私密开关 */}
             <div className="flex items-center justify-between py-2 border-t border-slate-100">
-              <div><span className="text-sm font-medium text-slate-700">公开脑洞</span><p className="text-xs text-slate-400">关闭后仅你自己可见</p></div>
+              <div><span className="text-sm font-medium text-slate-700">公开洞核</span><p className="text-xs text-slate-400">关闭后仅你自己可见</p></div>
               <button onClick={() => setIsPublic(!isPublic)} className={`relative w-11 h-6 rounded-full transition-colors ${isPublic ? 'bg-indigo-600' : 'bg-slate-300'}`}><span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${isPublic ? 'translate-x-5' : ''}`} /></button>
             </div>
 
@@ -103,7 +103,7 @@ export default function PublishPage() {
               <div><span className="text-sm font-medium text-slate-700">匿名发布</span><p className="text-xs text-slate-400">开启后你的昵称将不会显示</p></div>
               <button onClick={() => setIsAnonymous(!isAnonymous)} className={`relative w-11 h-6 rounded-full transition-colors ${isAnonymous ? 'bg-indigo-600' : 'bg-slate-300'}`}><span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${isAnonymous ? 'translate-x-5' : ''}`} /></button>
             </div>
-            <button onClick={handleSubmit} disabled={!title.trim() || !content.trim() || !category} className="w-full py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors">✨ 发布脑洞</button>
+            <button onClick={handleSubmit} disabled={!title.trim() || !content.trim() || !category} className="w-full py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors">✨ 发布洞核</button>
           </div>
         </div>
       </main>

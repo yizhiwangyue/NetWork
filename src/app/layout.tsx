@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: '脑洞星球 - 让每一个奇思妙想都有回响',
-  description: '分享你的脑洞，发现有趣的想法',
+  title: '嘿洞星球 - 等你来开洞',
+  description: '分享你的洞核，发现有趣的想法',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',

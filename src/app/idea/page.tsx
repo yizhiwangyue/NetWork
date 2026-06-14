@@ -6,7 +6,20 @@ import FolderPickerModal from '@/components/FolderPickerModal'
 import { useStore } from '@/lib/store'
 import { timeAgo, getCategoryLabel } from '@/lib/seed'
 import { linkify } from '@/lib/linkify'
+import UserLink from '@/components/UserLink'
 import Link from 'next/link'
+
+function FollowButton({ userId }: { userId: string }) {
+  const followedUserIds = useStore((s) => s.followedUserIds)
+  const toggleFollow = useStore((s) => s.toggleFollow)
+  const isFollowed = followedUserIds.includes(userId)
+  return (
+    <button onClick={e => { e.stopPropagation(); toggleFollow(userId) }}
+      className={`ml-auto shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${isFollowed ? 'bg-gray-100 text-gray-500 hover:bg-gray-200' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`}>
+      {isFollowed ? '已关注' : '＋ 关注'}
+    </button>
+  )
+}
 
 const CARD_COLORS = ['from-indigo-100 to-blue-200','from-purple-100 to-pink-200','from-green-100 to-teal-200','from-orange-100 to-yellow-200','from-cyan-100 to-sky-200']
 
@@ -24,6 +37,8 @@ function IdeaDetailContent() {
   const toggleLike = useStore((s) => s.toggleLike)
   const toggleFavorite = useStore((s) => s.toggleFavorite)
   const currentUser = useStore((s) => s.currentUser)
+  const followedUserIds = useStore((s) => s.followedUserIds)
+  const toggleFollow = useStore((s) => s.toggleFollow)
   const addComment = useStore((s) => s.addComment)
 
   const [newComment, setNewComment] = useState('')
@@ -73,8 +88,8 @@ function IdeaDetailContent() {
       <Header />
       <div className="max-w-lg mx-auto px-4 py-20 text-center">
         <div className="text-5xl mb-4">🔍</div>
-        <h2 className="text-xl font-bold text-slate-800 mb-2">脑洞不存在</h2>
-        <p className="text-slate-500 mb-6">这个脑洞可能已经被删除了</p>
+        <h2 className="text-xl font-bold text-slate-800 mb-2">洞核不存在</h2>
+        <p className="text-slate-500 mb-6">这个洞核可能已经被删除了</p>
         <Link href="/discover" className="btn-primary px-6 py-3 no-underline">返回首页</Link>
       </div>
     </div>
@@ -164,9 +179,13 @@ function IdeaDetailContent() {
               {/* 元信息 */}
               <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                 <div className="flex items-center gap-3">
-                  <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-lg">{idea.isAnonymous ? '👤' : idea.author?.avatar}</span>
+                  <UserLink user={idea.author} isAnonymous={idea.isAnonymous}>
+                    <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-lg cursor-pointer">{idea.isAnonymous ? '👤' : idea.author?.avatar}</span>
+                  </UserLink>
                   <div>
-                    <p className="text-sm font-bold text-gray-700">{idea.isAnonymous ? '匿名用户' : idea.author?.nickname}</p>
+                    <UserLink user={idea.author} isAnonymous={idea.isAnonymous}>
+                      <p className="text-sm font-bold text-gray-700 cursor-pointer hover:text-indigo-600">{idea.isAnonymous ? '匿名用户' : idea.author?.nickname}</p>
+                    </UserLink>
                     <p className="text-[11px] text-gray-400">{timeAgo(idea.createdAt)}</p>
                   </div>
                 </div>
@@ -206,10 +225,14 @@ function IdeaDetailContent() {
                 <div className="space-y-4">
                   {comments.map(c => (
                     <div key={c.id} className="flex gap-3">
-                      <span className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-sm shrink-0">{c.author.avatar}</span>
+                      <UserLink user={c.author} isAnonymous={false}>
+                        <span className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-sm shrink-0 cursor-pointer">{c.author.avatar}</span>
+                      </UserLink>
                       <div className="flex-1 bg-gray-50 rounded-xl px-4 py-3">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm font-bold text-gray-700">{c.author.nickname}</span>
+                          <UserLink user={c.author} isAnonymous={false}>
+                            <span className="text-sm font-bold text-gray-700 cursor-pointer hover:text-indigo-600">{c.author.nickname}</span>
+                          </UserLink>
                           <span className="text-[11px] text-gray-400">{new Date(c.createdAt).toLocaleString('zh-CN')}</span>
                         </div>
                         <p className="text-sm text-gray-600 leading-relaxed break-words">{linkify(c.content)}</p>
@@ -233,14 +256,20 @@ function IdeaDetailContent() {
             <div className="sticky top-20 space-y-4">
               {/* 作者信息 */}
               <div className="card p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-xl">
-                    {idea.isAnonymous ? '👤' : idea.author?.avatar}
-                  </span>
+                <div className="flex items-start gap-3 mb-3">
+                  <UserLink user={idea.author} isAnonymous={idea.isAnonymous}>
+                    <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-xl cursor-pointer">
+                      {idea.isAnonymous ? '👤' : idea.author?.avatar}
+                    </span>
+                  </UserLink>
                   <div>
-                    <p className="text-sm font-bold text-gray-800">{idea.isAnonymous ? '匿名用户' : idea.author?.nickname}</p>
-                    {!idea.isAnonymous && idea.author?.bio && <p className="text-xs text-gray-400 mt-0.5">{idea.author.bio}</p>}
+                    <UserLink user={idea.author} isAnonymous={idea.isAnonymous}>
+                      <p className="text-sm font-bold text-gray-800 cursor-pointer hover:text-indigo-600">{idea.isAnonymous ? '匿名用户' : idea.author?.nickname}</p>
+                    </UserLink>
                   </div>
+                  {!idea.isAnonymous && idea.author && idea.author.id !== currentUser?.id && (
+                    <FollowButton userId={idea.author.id} />
+                  )}
                 </div>
                 <div className="flex gap-3 text-center pt-3 border-t border-gray-100">
                   <div className="flex-1"><p className="text-sm font-bold text-indigo-600">{idea.likes}</p><p className="text-[10px] text-gray-400">获赞</p></div>
@@ -249,7 +278,7 @@ function IdeaDetailContent() {
                 </div>
               </div>
 
-              {/* 相关脑洞 */}
+              {/* 相关洞核 */}
               {related.length > 0 && (
                 <div className="card p-4">
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">📌 相关推荐</h3>
