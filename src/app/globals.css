@@ -30,6 +30,13 @@
 /* ===================== 基础 ===================== */
 * { box-sizing: border-box; }
 
+/* 全局防止长文本溢出 — 覆盖所有板块 */
+p, span, div, h1, h2, h3, h4, h5, h6, li, blockquote, label, a, button, textarea, input {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Noto Sans SC", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -236,6 +243,12 @@ body {
 .cover-sub   { animation: subtitleReveal 0.8s cubic-bezier(0.22,1,0.36,1) 0.8s both; }
 .cover-btn   { animation: subtitleReveal 0.8s cubic-bezier(0.22,1,0.36,1) 1.2s both; }
 .cover-floats { animation: fadeIn 1s ease 0.1s both; }
+
+/* 灯箱浮动效果 */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-8px) scale(1.01); }
+}
 
 /* ===================== 头部导航阴影 ===================== */
 .header-shadow {

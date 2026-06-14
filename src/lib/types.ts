@@ -10,8 +10,10 @@ export interface Idea {
   title: string
   content: string
   highlight: string
+  images: string[]
   author: User | null
   isAnonymous: boolean
+  isPublic: boolean
   category: string
   tags: string[]
   likes: number

@@ -34,7 +34,7 @@ export default function RightPanel() {
             {hotIdeas.slice(0, 3).map((idea, i) => (
               <a
                 key={idea.id}
-                href={`/idea/${idea.id}`}
+                href={`/idea?id=${idea.id}`}
                 className="block px-3 py-2 rounded-lg bg-gray-50 hover:bg-indigo-50 transition-all no-underline"
               >
                 <div className="flex items-start gap-2.5">
@@ -75,7 +75,7 @@ export default function RightPanel() {
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">🌟 编辑精选</h3>
         <div className="space-y-3">
           {ideas.filter(i => i.isBounty).slice(0, 2).map(idea => (
-            <a key={idea.id} href={`/idea/${idea.id}`} className="flex items-center gap-3 no-underline group">
+            <a key={idea.id} href={`/idea?id=${idea.id}`} className="flex items-center gap-3 no-underline group">
               <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center shrink-0">
                 <span className="text-lg">🏆</span>
               </div>
